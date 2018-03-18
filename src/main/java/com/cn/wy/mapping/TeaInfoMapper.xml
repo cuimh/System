@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.wy.dao.TeaInfoMapper">
+  <resultMap id="BaseResultMap" type="com.cn.wy.pojo.TeaInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="tername" jdbcType="VARCHAR" property="tername" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="departId" jdbcType="BIGINT" property="departid" />
+    <result column="tea_no" jdbcType="VARCHAR" property="teaNo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, tername, sex, note, departId, tea_no
+  </sql>
+  <select id="selectByExample" parameterType="com.cn.wy.pojo.TeaInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tea_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tea_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tea_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.wy.pojo.TeaInfoExample">
+    delete from tea_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.wy.pojo.TeaInfo">
+    insert into tea_info (id, tername, sex, 
+      note, departId, tea_no
+      )
+    values (#{id,jdbcType=BIGINT}, #{tername,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{note,jdbcType=VARCHAR}, #{departid,jdbcType=BIGINT}, #{teaNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.wy.pojo.TeaInfo">
+    insert into tea_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tername != null">
+        tername,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="departid != null">
+        departId,
+      </if>
+      <if test="teaNo != null">
+        tea_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tername != null">
+        #{tername,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="departid != null">
+        #{departid,jdbcType=BIGINT},
+      </if>
+      <if test="teaNo != null">
+        #{teaNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.wy.pojo.TeaInfoExample" resultType="java.lang.Long">
+    select count(*) from tea_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tea_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.tername != null">
+        tername = #{record.tername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departid != null">
+        departId = #{record.departid,jdbcType=BIGINT},
+      </if>
+      <if test="record.teaNo != null">
+        tea_no = #{record.teaNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tea_info
+    set id = #{record.id,jdbcType=BIGINT},
+      tername = #{record.tername,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      note = #{record.note,jdbcType=VARCHAR},
+      departId = #{record.departid,jdbcType=BIGINT},
+      tea_no = #{record.teaNo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.wy.pojo.TeaInfo">
+    update tea_info
+    <set>
+      <if test="tername != null">
+        tername = #{tername,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="departid != null">
+        departId = #{departid,jdbcType=BIGINT},
+      </if>
+      <if test="teaNo != null">
+        tea_no = #{teaNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.wy.pojo.TeaInfo">
+    update tea_info
+    set tername = #{tername,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      departId = #{departid,jdbcType=BIGINT},
+      tea_no = #{teaNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getTeaByNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+	   select * from tea_info where tea_no=#{teaNo}
+	</select>
+	
+	<select id="teaList" resultMap="BaseResultMap">
+		select * from tea_info where departId =#{departid}
+	</select>
+</mapper>

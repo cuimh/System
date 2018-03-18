@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.wy.dao.MajorMapper">
+  <resultMap id="BaseResultMap" type="com.cn.wy.pojo.Major">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="majorNo" jdbcType="VARCHAR" property="majorno" />
+    <result column="majorName" jdbcType="VARCHAR" property="majorname" />
+    <result column="departId" jdbcType="BIGINT" property="departid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, majorNo, majorName, departId
+  </sql>
+  <select id="selectByExample" parameterType="com.cn.wy.pojo.MajorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from major
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from major
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from major
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.wy.pojo.MajorExample">
+    delete from major
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.wy.pojo.Major">
+    insert into major (id, majorNo, majorName, 
+      departId)
+    values (#{id,jdbcType=BIGINT}, #{majorno,jdbcType=VARCHAR}, #{majorname,jdbcType=VARCHAR}, 
+      #{departid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.wy.pojo.Major">
+    insert into major
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="majorno != null">
+        majorNo,
+      </if>
+      <if test="majorname != null">
+        majorName,
+      </if>
+      <if test="departid != null">
+        departId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="majorno != null">
+        #{majorno,jdbcType=VARCHAR},
+      </if>
+      <if test="majorname != null">
+        #{majorname,jdbcType=VARCHAR},
+      </if>
+      <if test="departid != null">
+        #{departid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.wy.pojo.MajorExample" resultType="java.lang.Long">
+    select count(*) from major
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update major
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.majorno != null">
+        majorNo = #{record.majorno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorname != null">
+        majorName = #{record.majorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departid != null">
+        departId = #{record.departid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update major
+    set id = #{record.id,jdbcType=BIGINT},
+      majorNo = #{record.majorno,jdbcType=VARCHAR},
+      majorName = #{record.majorname,jdbcType=VARCHAR},
+      departId = #{record.departid,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.wy.pojo.Major">
+    update major
+    <set>
+      <if test="majorno != null">
+        majorNo = #{majorno,jdbcType=VARCHAR},
+      </if>
+      <if test="majorname != null">
+        majorName = #{majorname,jdbcType=VARCHAR},
+      </if>
+      <if test="departid != null">
+        departId = #{departid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.wy.pojo.Major">
+    update major
+    set majorNo = #{majorno,jdbcType=VARCHAR},
+      majorName = #{majorname,jdbcType=VARCHAR},
+      departId = #{departid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getMajorByNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+	   select * from major where majorName=#{majorname}
+	</select>
+	<select id="majorList" resultMap="BaseResultMap">
+		select * from major where departId=#{departid}
+	</select>
+	
+</mapper>

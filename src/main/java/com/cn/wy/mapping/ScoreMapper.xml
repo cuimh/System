@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.wy.dao.ScoreMapper">
+  <resultMap id="BaseResultMap" type="com.cn.wy.pojo.Score">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="stuNo" jdbcType="VARCHAR" property="stuno" />
+    <result column="teacherId" jdbcType="DOUBLE" property="teacherid" />
+    <result column="coursrId" jdbcType="DOUBLE" property="coursrid" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="credit" jdbcType="REAL" property="credit" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, stuNo, teacherId, coursrId, score, credit, flag
+  </sql>
+  <select id="selectByExample" parameterType="com.cn.wy.pojo.ScoreExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from score
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.wy.pojo.ScoreExample">
+    delete from score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.wy.pojo.Score">
+    insert into score (id, stuNo, teacherId, 
+      coursrId, score, credit, flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{stuno,jdbcType=VARCHAR}, #{teacherid,jdbcType=DOUBLE}, 
+      #{coursrid,jdbcType=DOUBLE}, #{score,jdbcType=REAL}, #{credit,jdbcType=REAL}, #{flag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.wy.pojo.Score">
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="stuno != null">
+        stuNo,
+      </if>
+      <if test="teacherid != null">
+        teacherId,
+      </if>
+      <if test="coursrid != null">
+        coursrId,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="credit != null">
+        credit,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="stuno != null">
+        #{stuno,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null">
+        #{teacherid,jdbcType=DOUBLE},
+      </if>
+      <if test="coursrid != null">
+        #{coursrid,jdbcType=DOUBLE},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=REAL},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.wy.pojo.ScoreExample" resultType="java.lang.Long">
+    select count(*) from score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update score
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.stuno != null">
+        stuNo = #{record.stuno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherid != null">
+        teacherId = #{record.teacherid,jdbcType=DOUBLE},
+      </if>
+      <if test="record.coursrid != null">
+        coursrId = #{record.coursrid,jdbcType=DOUBLE},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=REAL},
+      </if>
+      <if test="record.credit != null">
+        credit = #{record.credit,jdbcType=REAL},
+      </if>
+      <if test="record.flag != null">
+        flag = #{record.flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update score
+    set id = #{record.id,jdbcType=BIGINT},
+      stuNo = #{record.stuno,jdbcType=VARCHAR},
+      teacherId = #{record.teacherid,jdbcType=DOUBLE},
+      coursrId = #{record.coursrid,jdbcType=DOUBLE},
+      score = #{record.score,jdbcType=REAL},
+      credit = #{record.credit,jdbcType=REAL},
+      flag = #{record.flag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.wy.pojo.Score">
+    update score
+    <set>
+      <if test="stuno != null">
+        stuNo = #{stuno,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null">
+        teacherId = #{teacherid,jdbcType=DOUBLE},
+      </if>
+      <if test="coursrid != null">
+        coursrId = #{coursrid,jdbcType=DOUBLE},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="credit != null">
+        credit = #{credit,jdbcType=REAL},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.wy.pojo.Score">
+    update score
+    set stuNo = #{stuno,jdbcType=VARCHAR},
+      teacherId = #{teacherid,jdbcType=DOUBLE},
+      coursrId = #{coursrid,jdbcType=DOUBLE},
+      score = #{score,jdbcType=REAL},
+      credit = #{credit,jdbcType=REAL},
+      flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 根据课程ID，学号查询数据 -->
+  <select id="countScore" parameterType="com.cn.wy.pojo.Score" resultType="java.lang.Long">
+  	select count(*) from  score where 1=1 
+       and coursrId = #{coursrid}
+       and stuNo = #{stuno}
+  </select>
+  <select id="countScore1" parameterType="com.cn.wy.pojo.Score" resultType="java.lang.Long">
+  <![CDATA[
+  	select count(*) from  score where 1=1 
+       and coursrId = #{0}
+       and flag=0
+      ]]>
+  </select>
+ <select id="scoreList" resultMap="BaseResultMap">
+  select * from score where stuNo=#{stuno}
+  </select>
+  <select id="countStuNo" parameterType="com.cn.wy.pojo.Score" resultType="java.lang.Long">
+  	select count(*) from  score where 1=1 
+       and stuNo = #{0} and flag =0
+  </select>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.wy.dao.RolePermisMapper">
+  <resultMap id="BaseResultMap" type="com.cn.wy.pojo.RolePermis">
+    <result column="roleId" jdbcType="BIGINT" property="roleid" />
+    <result column="perId" jdbcType="BIGINT" property="perid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    roleId, perId
+  </sql>
+  <select id="selectByExample" parameterType="com.cn.wy.pojo.RolePermisExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from role_permis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.cn.wy.pojo.RolePermisExample">
+    delete from role_permis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.wy.pojo.RolePermis">
+    insert into role_permis (roleId, perId)
+    values (#{roleid,jdbcType=BIGINT}, #{perid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.wy.pojo.RolePermis">
+    insert into role_permis
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        roleId,
+      </if>
+      <if test="perid != null">
+        perId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        #{roleid,jdbcType=BIGINT},
+      </if>
+      <if test="perid != null">
+        #{perid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.wy.pojo.RolePermisExample" resultType="java.lang.Long">
+    select count(*) from role_permis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update role_permis
+    <set>
+      <if test="record.roleid != null">
+        roleId = #{record.roleid,jdbcType=BIGINT},
+      </if>
+      <if test="record.perid != null">
+        perId = #{record.perid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update role_permis
+    set roleId = #{record.roleid,jdbcType=BIGINT},
+      perId = #{record.perid,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <delete id="delete" parameterType="com.cn.wy.pojo.RolePermis">
+		delete from
+		role_permis
+		where perId = #{record.perid,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertLists" parameterType="java.util.List" >
+		insert into
+		role_permis
+		(roleId, perId)values
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.roleId}, #{item.perId})
+		</foreach>
+	</insert>
+	<delete id="deleteListByRoleIdAndSysType" parameterType="java.util.Map">
+		<![CDATA[
+			delete FROM role_permis WHERE roleId=#{roleId} 
+		]]>
+	</delete>
+</mapper>

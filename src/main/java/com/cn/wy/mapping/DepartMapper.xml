@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.wy.dao.DepartMapper">
+  <resultMap id="BaseResultMap" type="com.cn.wy.pojo.Depart">
+    <id column="departId" jdbcType="BIGINT" property="departid" />
+    <result column="departName" jdbcType="VARCHAR" property="departname" />
+    <result column="departInfo" jdbcType="VARCHAR" property="departinfo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    departId, departName, departInfo
+  </sql>
+  <select id="selectByExample" parameterType="com.cn.wy.pojo.DepartExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from depart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from depart
+    where departId = #{departid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from depart
+    where departId = #{departid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.wy.pojo.DepartExample">
+    delete from depart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.wy.pojo.Depart">
+    insert into depart (departId, departName, departInfo
+      )
+    values (#{departid,jdbcType=BIGINT}, #{departname,jdbcType=VARCHAR}, #{departinfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.wy.pojo.Depart">
+    insert into depart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="departid != null">
+        departId,
+      </if>
+      <if test="departname != null">
+        departName,
+      </if>
+      <if test="departinfo != null">
+        departInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="departid != null">
+        #{departid,jdbcType=BIGINT},
+      </if>
+      <if test="departname != null">
+        #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="departinfo != null">
+        #{departinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.wy.pojo.DepartExample" resultType="java.lang.Long">
+    select count(*) from depart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update depart
+    <set>
+      <if test="record.departid != null">
+        departId = #{record.departid,jdbcType=BIGINT},
+      </if>
+      <if test="record.departname != null">
+        departName = #{record.departname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departinfo != null">
+        departInfo = #{record.departinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update depart
+    set departId = #{record.departid,jdbcType=BIGINT},
+      departName = #{record.departname,jdbcType=VARCHAR},
+      departInfo = #{record.departinfo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.wy.pojo.Depart">
+    update depart
+    <set>
+      <if test="departname != null">
+        departName = #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="departinfo != null">
+        departInfo = #{departinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where departId = #{departid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.wy.pojo.Depart">
+    update depart
+    set departName = #{departname,jdbcType=VARCHAR},
+      departInfo = #{departinfo,jdbcType=VARCHAR}
+    where departId = #{departid,jdbcType=BIGINT}
+  </update>
+  <select id="getdepartByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+	   select * from depart where departName=#{departname}
+	</select>
+	<select id="departList" resultMap="BaseResultMap">
+		select * from depart
+	</select>
+</mapper>

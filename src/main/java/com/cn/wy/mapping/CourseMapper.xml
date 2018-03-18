@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.wy.dao.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.cn.wy.pojo.Course">
+    <id column="courseId" jdbcType="BIGINT" property="courseid" />
+    <result column="teacherNo" jdbcType="BIGINT" property="teacherno" />
+    <result column="courseName" jdbcType="VARCHAR" property="coursename" />
+    <result column="courseTime" jdbcType="VARCHAR" property="coursetime" />
+    <result column="courseAddress" jdbcType="BIGINT" property="courseaddress" />
+    <result column="courseAbout" jdbcType="VARCHAR" property="courseabout" />
+    <result column="courseGrade" jdbcType="REAL" property="coursegrade" />
+    <result column="departId" jdbcType="BIGINT" property="departid" />
+    <result column="classNo" jdbcType="BIGINT" property="classno" />
+    
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    courseId, teacherNo, courseName, courseTime, courseAddress, courseAbout, courseGrade, 
+    departId, classNo
+  </sql>
+  <select id="selectByExample" parameterType="com.cn.wy.pojo.CourseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <!-- 根据课程ID查询数据 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where courseId = #{courseid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from course
+    where courseId = #{courseid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.wy.pojo.CourseExample">
+    delete from course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.wy.pojo.Course">
+    insert into course (courseId, teacherNo, courseName, 
+      courseTime, courseAddress, courseAbout, 
+      courseGrade, departId, classNo
+      )
+    values (#{courseid,jdbcType=BIGINT}, #{teacherno,jdbcType=BIGINT}, #{coursename,jdbcType=VARCHAR}, 
+      #{coursetime,jdbcType=VARCHAR}, #{courseaddress,jdbcType=BIGINT}, #{courseabout,jdbcType=VARCHAR}, 
+      #{coursegrade,jdbcType=REAL}, #{departid,jdbcType=BIGINT}, #{classno,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.wy.pojo.Course">
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseid != null">
+        courseId,
+      </if>
+      <if test="teacherno != null">
+        teacherNo,
+      </if>
+      <if test="coursename != null">
+        courseName,
+      </if>
+      <if test="coursetime != null">
+        courseTime,
+      </if>
+      <if test="courseaddress != null">
+        courseAddress,
+      </if>
+      <if test="courseabout != null">
+        courseAbout,
+      </if>
+      <if test="coursegrade != null">
+        courseGrade,
+      </if>
+      <if test="departid != null">
+        departId,
+      </if>
+      <if test="classno != null">
+        classNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseid != null">
+        #{courseid,jdbcType=BIGINT},
+      </if>
+      <if test="teacherno != null">
+        #{teacherno,jdbcType=BIGINT},
+      </if>
+      <if test="coursename != null">
+        #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="coursetime != null">
+        #{coursetime,jdbcType=VARCHAR},
+      </if>
+      <if test="courseaddress != null">
+        #{courseaddress,jdbcType=BIGINT},
+      </if>
+      <if test="courseabout != null">
+        #{courseabout,jdbcType=VARCHAR},
+      </if>
+      <if test="coursegrade != null">
+        #{coursegrade,jdbcType=REAL},
+      </if>
+      <if test="departid != null">
+        #{departid,jdbcType=BIGINT},
+      </if>
+      <if test="classno != null">
+        #{classno,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.wy.pojo.CourseExample" resultType="java.lang.Long">
+    select count(*) from course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update course
+    <set>
+      <if test="record.courseid != null">
+        courseId = #{record.courseid,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherno != null">
+        teacherNo = #{record.teacherno,jdbcType=BIGINT},
+      </if>
+      <if test="record.coursename != null">
+        courseName = #{record.coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coursetime != null">
+        courseTime = #{record.coursetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseaddress != null">
+        courseAddress = #{record.courseaddress,jdbcType=BIGINT},
+      </if>
+      <if test="record.courseabout != null">
+        courseAbout = #{record.courseabout,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coursegrade != null">
+        courseGrade = #{record.coursegrade,jdbcType=REAL},
+      </if>
+      <if test="record.departid != null">
+        departId = #{record.departid,jdbcType=BIGINT},
+      </if>
+      <if test="record.classno != null">
+        classNo = #{record.classno,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update course
+    set courseId = #{record.courseid,jdbcType=BIGINT},
+      teacherNo = #{record.teacherno,jdbcType=BIGINT},
+      courseName = #{record.coursename,jdbcType=VARCHAR},
+      courseTime = #{record.coursetime,jdbcType=VARCHAR},
+      courseAddress = #{record.courseaddress,jdbcType=BIGINT},
+      courseAbout = #{record.courseabout,jdbcType=VARCHAR},
+      courseGrade = #{record.coursegrade,jdbcType=REAL},
+      departId = #{record.departid,jdbcType=BIGINT},
+      classNo = #{record.classno,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.wy.pojo.Course">
+    update course
+    <set>
+      <if test="teacherno != null">
+        teacherNo = #{teacherno,jdbcType=BIGINT},
+      </if>
+      <if test="coursename != null">
+        courseName = #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="coursetime != null">
+        courseTime = #{coursetime,jdbcType=VARCHAR},
+      </if>
+      <if test="courseaddress != null">
+        courseAddress = #{courseaddress,jdbcType=BIGINT},
+      </if>
+      <if test="courseabout != null">
+        courseAbout = #{courseabout,jdbcType=VARCHAR},
+      </if>
+      <if test="coursegrade != null">
+        courseGrade = #{coursegrade,jdbcType=REAL},
+      </if>
+      <if test="departid != null">
+        departId = #{departid,jdbcType=BIGINT},
+      </if>
+      <if test="classno != null">
+        classNo = #{classno,jdbcType=BIGINT},
+      </if>
+    </set>
+    where courseId = #{courseid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.wy.pojo.Course">
+    update course
+    set teacherNo = #{teacherno,jdbcType=BIGINT},
+      courseName = #{coursename,jdbcType=VARCHAR},
+      courseTime = #{coursetime,jdbcType=VARCHAR},
+      courseAddress = #{courseaddress,jdbcType=BIGINT},
+      courseAbout = #{courseabout,jdbcType=VARCHAR},
+      courseGrade = #{coursegrade,jdbcType=REAL},
+      departId = #{departid,jdbcType=BIGINT},
+      classNo = #{classno,jdbcType=BIGINT}
+    where courseId = #{courseid,jdbcType=BIGINT}
+  </update>
+  <select id="getCourseByNo" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	   select * from course where classNo=#{classno}
+	</select>
+</mapper>
