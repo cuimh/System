@@ -1,4 +1,4 @@
-//新增区域费用方案
+//新增课程信息
 $("#addFee").click(function () {
 	$("#feeBoxPanel").html("新增课程信息");
 	$("#courseId").val("");
